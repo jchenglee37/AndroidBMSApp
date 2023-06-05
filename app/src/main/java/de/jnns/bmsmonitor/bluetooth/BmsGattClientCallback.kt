@@ -55,7 +55,15 @@ class BmsGattClientCallback(
         super.onServicesDiscovered(gatt, status)
 
         if (status != BluetoothGatt.GATT_SUCCESS) {
+            Log.d("BluetoothGatt", "onServicesDiscovered failed")
             return
+        }
+
+        var i: Int = 0
+
+        for(serv in gatt.services) {
+            i++
+            Log.d("BluetoothGatt", "Services" + i.toString() + ":" + serv.uuid.toString())
         }
 
         val uartService = gatt.getService(uartUuid)

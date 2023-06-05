@@ -1,6 +1,7 @@
 package de.jnns.bmsmonitor.bluetooth
 
 import android.bluetooth.BluetoothDevice
+import android.util.Log
 import kotlinx.coroutines.Runnable
 
 class BleManager {
@@ -9,6 +10,8 @@ class BleManager {
 
     fun addDevice(device: BluetoothDevice) {
         if (!bleDevices.contains(device)) {
+            Log.d("BleManager", "Device Address:" + device.address)
+            Log.d("BleManager", "Device Name:" + device.name)
             bleDevices.add(device)
 
             for (func in onUpdateFunctions)
