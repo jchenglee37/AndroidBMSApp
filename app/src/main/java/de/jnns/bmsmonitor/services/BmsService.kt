@@ -22,7 +22,8 @@ import io.realm.Realm
 @ExperimentalUnsignedTypes
 class BmsService : Service() {
     // BMS commands, they won't change
-    private val cmdGeneralInfo: ByteArray = ubyteArrayOf(0xDDU, 0xA5U, 0x03U, 0x00U, 0xFFU, 0xFDU, 0x77U).toByteArray()
+//    private val cmdGeneralInfo: ByteArray = ubyteArrayOf(0xDDU, 0xA5U, 0x03U, 0x00U, 0xFFU, 0xFDU, 0x77U).toByteArray()
+    private val cmdGeneralInfo: ByteArray = ubyteArrayOf(0x10U, 0x00U, 0x00U, 0x64U).toByteArray()
     private val cmdCellInfo: ByteArray = ubyteArrayOf(0xDDU, 0xA5U, 0x04U, 0x00U, 0xFFU, 0xFCU, 0x77U).toByteArray()
     private val cmdBmsVersion: ByteArray = ubyteArrayOf(0xDDU, 0xA5U, 0x05U, 0x00U, 0xFFU, 0xFBU, 0x77U).toByteArray()
 
@@ -35,7 +36,7 @@ class BmsService : Service() {
     // it is going to toggle "dataModeSwitch" and
     // request General or Cell data
     private val dataHandler: Handler = Handler()
-    private var dataModeSwitch = false
+//    private var dataModeSwitch = false
     private var dataPollDelay: Long = 0
 
     // we need both datasets to update the view
@@ -64,7 +65,8 @@ class BmsService : Service() {
 
         bleMac = PreferenceManager.getDefaultSharedPreferences(this).getString("macAddress", "")!!
         blePin = PreferenceManager.getDefaultSharedPreferences(this).getString("blePin", "")!!
-        dataPollDelay = PreferenceManager.getDefaultSharedPreferences(this).getString("refreshInterval", "1000")!!.toLong() / 2
+//        dataPollDelay = PreferenceManager.getDefaultSharedPreferences(this).getString("refreshInterval", "1000")!!.toLong() / 2
+        dataPollDelay = PreferenceManager.getDefaultSharedPreferences(this).getString("refreshInterval", "1000")!!.toLong()
 
         BleManager.i.onUpdateFunctions.add {
             searchForDeviceAndConnect()
@@ -100,6 +102,8 @@ class BmsService : Service() {
         batteryData.totalCapacity = generalInfo.nominalCapacity
         batteryData.temperatureCount = generalInfo.temperatureProbeCount
         batteryData.temperatures = generalInfo.temperatureProbeValues
+        batteryData.vol = generalInfo.totalVoltage
+        batteryData.temperature = generalInfo.temperature
 
         generalInfoReceived = true
         sendData()
@@ -147,6 +151,8 @@ class BmsService : Service() {
         connectToDevice()
     }
 
+    private fun ByteArray.toHexString() = joinToString("") { "%02x".format(it) }
+
     private fun onConnectionSucceeded() {
         isConnected = true
         isConnecting = false
@@ -155,13 +161,15 @@ class BmsService : Service() {
             override fun run() {
                 if (gattClientCallback.isConnected) {
                     if (isInForeground) {
-                        if (dataModeSwitch) {
-                            writeBytes(cmdGeneralInfo)
-                        } else {
-                            writeBytes(cmdCellInfo)
-                        }
-
-                        dataModeSwitch = !dataModeSwitch
+//                        if (dataModeSwitch) {
+//                            writeBytes(cmdGeneralInfo)
+//                        } else {
+//                            writeBytes(cmdCellInfo)
+//                        }
+//
+//                        dataModeSwitch = !dataModeSwitch
+                        Log.d("BMS", "writeBytes():" + cmdGeneralInfo.toHexString())
+                        writeBytes(cmdGeneralInfo)
 
                         dataHandler.postDelayed(this, dataPollDelay)
                     }

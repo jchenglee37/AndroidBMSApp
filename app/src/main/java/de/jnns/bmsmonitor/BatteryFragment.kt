@@ -221,7 +221,8 @@ class BatteryFragment : Fragment() {
             binding.labelCapacityWh.text = batteryData.watthours.roundToInt().toString()
 
             // Row 3
-            binding.labelTemperature.text = roundTo(batteryData.avgTemperature, 1).toString()
+//            binding.labelTemperature.text = roundTo(batteryData.avgTemperature, 1).toString()
+            binding.labelTemperature.text = roundTo(batteryData.temperature, 1).toString()
             binding.labelTemperatureMax.text = roundTo(batteryData.maxTemperature, 1).toString()
         }
     }
