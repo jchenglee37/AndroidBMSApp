@@ -60,4 +60,11 @@
 
     <string name="settingsMaxSpeed">Max Speed (Km/h)</string>
     <string name="cellbalance">Cell Balance</string>
+
+    <string name="capacityTitle">Pack Cap.:</string>
+    <string name="cycleTitle">Cycle:</string>
+    <string name="pack_voltage_title">Pack Vol.:</string>
+    <string name="discharge_curr_title">Disch. Curr:</string>
+    <string name="charge_curr_title">Charge Curr:</string>
+    <string name="max_charge_current">Max. CC:</string>
 </resources>

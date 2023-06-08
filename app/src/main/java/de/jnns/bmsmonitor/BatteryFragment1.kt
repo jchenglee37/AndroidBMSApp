@@ -1,86 +1,92 @@
 package de.jnns.bmsmonitor
 
-//import android.content.BroadcastReceiver
-//import android.content.Context
-//import android.content.Intent
-//import android.content.IntentFilter
-//import android.content.res.ColorStateList
-//import android.os.Bundle
-//import android.view.LayoutInflater
-//import android.view.View
-//import android.view.ViewGroup
-//import android.widget.ProgressBar
-//import android.widget.TextView
-//import androidx.core.content.ContextCompat
-//import androidx.fragment.app.Fragment
-//import androidx.localbroadcastmanager.content.LocalBroadcastManager
-//import androidx.navigation.findNavController
-//import androidx.preference.PreferenceManager
-//import com.github.anastr.speedviewlib.components.Section
-//import com.github.mikephil.charting.data.BarData
-//import com.github.mikephil.charting.data.BarDataSet
-//import com.github.mikephil.charting.data.BarEntry
-//import com.github.mikephil.charting.formatter.DefaultValueFormatter
-//import com.google.gson.Gson
-//import de.jnns.bmsmonitor.data.BatteryData
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.res.ColorStateList
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.navigation.findNavController
+import androidx.preference.PreferenceManager
+import com.github.anastr.speedviewlib.components.Section
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.DefaultValueFormatter
+import com.google.gson.Gson
+import de.jnns.bmsmonitor.R
+import de.jnns.bmsmonitor.data.BatteryData
 //import de.jnns.bmsmonitor.databinding.FragmentBatteryBinding
-//import java.util.*
-//import kotlin.math.pow
-//import kotlin.math.roundToInt
-//
-//
-//@ExperimentalUnsignedTypes
-//class BatteryFragment : Fragment() {
+import de.jnns.bmsmonitor.databinding.FragmentBmsBinding
+import java.util.*
+import kotlin.math.pow
+import kotlin.math.round
+import kotlin.math.roundToInt
+
+
+@ExperimentalUnsignedTypes
+class BatteryFragment1 : Fragment() {
 //    private var _binding: FragmentBatteryBinding? = null
-//    private val binding get() = _binding!!
-//
-//    // no need to refresh data in the background
-//    private var isInForeground = false
-//
-//    // time calculation smoothing
-//    // default 5 min
-//    private var smoothCount = 60 * 5
-//    private var smoothIndex = 0
-//    private var wattValues = FloatArray(smoothCount)
-//
-//    private var minCellVoltage = 0
-//    private var maxCellVoltage = 0
-//
-//    private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-//        override fun onReceive(context: Context, intent: Intent) {
-//            try {
-//                val msg: String = intent.getStringExtra("batteryData")!!
-//
+    private var _binding: FragmentBmsBinding? = null
+    private val binding get() = _binding!!
+
+    // no need to refresh data in the background
+    private var isInForeground = false
+
+    // time calculation smoothing
+    // default 5 min
+    private var smoothCount = 60 * 5
+    private var smoothIndex = 0
+    private var wattValues = FloatArray(smoothCount)
+
+    private var minCellVoltage = 0
+    private var maxCellVoltage = 0
+
+    private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            try {
+                val msg: String = intent.getStringExtra("batteryData")!!
+
+                // David Lee
 //                binding.labelStatus.text = String.format(resources.getString(R.string.connectedToBms), intent.getStringExtra("deviceName"))
-//
-//                if (msg.isNotEmpty()) {
-//                    updateUi(Gson().fromJson(msg, BatteryData::class.java))
-//                }
-//            } catch (ex: Exception) {
-//                // ignored
-//            }
-//        }
-//    }
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
-//        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver, IntentFilter("bmsDataIntent"))
+
+                if (msg.isNotEmpty()) {
+                    updateUi(Gson().fromJson(msg, BatteryData::class.java))
+                }
+            } catch (ex: Exception) {
+                // ignored
+            }
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver, IntentFilter("bmsDataIntent"))
 //        _binding = FragmentBatteryBinding.inflate(inflater, container, false)
-//        return binding.root
-//    }
-//
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        _binding = null
-//        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(mMessageReceiver)
-//    }
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
+        _binding = FragmentBmsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(mMessageReceiver)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
 //        binding.speedViewSpeed.clearSections()
 //        binding.speedViewSpeed.addSections(
 //            Section(0.00000000f, 0.11111111f, ContextCompat.getColor(requireContext(), R.color.batteryChargeHigh), 72.0f),
@@ -123,28 +129,45 @@ package de.jnns.bmsmonitor
 //        binding.barchartCells.xAxis.setDrawAxisLine(false)
 //
 //        binding.barchartCells.axisRight.isEnabled = false
-//    }
-//
-//    override fun onResume() {
-//        super.onResume()
-//
-//        isInForeground = true
-//
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        isInForeground = true
+
 //        binding.speedViewSpeed.speedTo(0.0f, 0)
 //        binding.labelStatus.text = getString(R.string.waitForBms)
-//    }
-//
-//    override fun onPause() {
-//        super.onPause()
-//        isInForeground = false
-//    }
-//
-//    private fun updateUi(batteryData: BatteryData) {
-//        if (!isInForeground) {
-//            return
-//        }
-//
-//        requireActivity().runOnUiThread {
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isInForeground = false
+    }
+
+    private fun updateUi(batteryData: BatteryData) {
+        if (!isInForeground) {
+            return
+        }
+
+        requireActivity().runOnUiThread {
+//            binding.labelTemperature.text = roundTo(batteryData.temperature, 1).toString()
+
+//            var cycles: Short = 0
+//            var capacity: Float = 0.0f
+//            var temperature: Float = 0.0f
+//            var dischargeCurrent: Float = 0.0f
+//            var packVoltage: Float = 0.0f
+//            var chargeCurrent: Float = 0.0f
+//            var maxChargeCurrent: Float = 0.0f
+
+            binding.labelCycle.text = batteryData.cycles.toString()
+            binding.labelPackCapacity.text = roundTo(batteryData.capacity, 1).toString()
+            binding.labelDischargeCurrent.text = roundTo(batteryData.dischargeCurrent, 1).toString()
+            binding.labelPackVoltage.text = roundTo(batteryData.packVoltage, 1).toString()
+            binding.labelChargeCurrent.text = roundTo(batteryData.chargeCurrent, 1).toString()
+            binding.labelMaxCC.text = roundTo(batteryData.maxChargeCurrent, 1).toString()
+
 //            // Power Gauge
 //            val powerUsage = batteryData.power * -1.0f
 //
@@ -224,9 +247,9 @@ package de.jnns.bmsmonitor
 ////            binding.labelTemperature.text = roundTo(batteryData.avgTemperature, 1).toString()
 //            binding.labelTemperature.text = roundTo(batteryData.temperature, 1).toString()
 //            binding.labelTemperatureMax.text = roundTo(batteryData.maxTemperature, 1).toString()
-//        }
-//    }
-//
+        }
+    }
+
 //    private fun uiColorCapacityProgressBar(value: Float, uiElement: ProgressBar) {
 //        // 80% skipped here because battery only gets charged to ~80 percent
 //        when {
@@ -244,7 +267,7 @@ package de.jnns.bmsmonitor
 //            }
 //        }
 //    }
-//
+
 //    private fun uiBatteryCapacityBar(value: Float) {
 //        when {
 //            value == 0.0f -> {
@@ -323,17 +346,17 @@ package de.jnns.bmsmonitor
 //            }
 //        }
 //    }
-//
-//    private fun roundTo(value: Float, decimals: Int): Float {
-//        if (value.isNaN() || value.isInfinite()) {
-//            return 0.0f
-//        }
-//
-//        if (decimals == 0) {
-//            return value.roundToInt().toFloat()
-//        }
-//
-//        val factor = 10.0.pow(decimals.toDouble()).toFloat()
-//        return (value * factor).roundToInt() / factor
-//    }
-//}
+
+    private fun roundTo(value: Float, decimals: Int): Float {
+        if (value.isNaN() || value.isInfinite()) {
+            return 0.0f
+        }
+
+        if (decimals == 0) {
+            return value.roundToInt().toFloat()
+        }
+
+        val factor = 10.0.pow(decimals.toDouble()).toFloat()
+        return (value * factor).roundToInt() / factor
+    }
+}

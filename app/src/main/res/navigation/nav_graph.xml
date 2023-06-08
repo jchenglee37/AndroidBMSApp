@@ -3,13 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/navigation_battery">
+    app:startDestination="@id/navigation_bms">
 
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_battery"-->
+<!--        android:name="de.jnns.bmsmonitor.BatteryFragment"-->
+<!--        android:label="fragment_battery"-->
+<!--        tools:layout="@layout/fragment_battery" />-->
     <fragment
-        android:id="@+id/navigation_battery"
-        android:name="de.jnns.bmsmonitor.BatteryFragment"
-        android:label="fragment_battery"
-        tools:layout="@layout/fragment_battery" />
+        android:id="@+id/navigation_bms"
+        android:name="de.jnns.bmsmonitor.BatteryFragment1"
+        android:label="fragment_bms"
+        tools:layout="@layout/fragment_bms" />
 
     <fragment
         android:id="@+id/navigation_settings"

@@ -65,7 +65,7 @@
         android:id="@+id/bottomNavigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/bgBase"
+        android:background="@color/bgBase9"
         android:hapticFeedbackEnabled="true"
         app:elevation="0dp"
         app:labelVisibilityMode="labeled"

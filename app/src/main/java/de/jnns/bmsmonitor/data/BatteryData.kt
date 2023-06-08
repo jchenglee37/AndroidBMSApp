@@ -10,24 +10,22 @@ open class BatteryData(
     var current: Float = 0.0f,
     var totalCapacity: Float = 0.0f,
     var currentCapacity: Float = 0.0f,
-    var cycles: Int = 0,
     var temperatureCount: Int = 0,
     var cellCount: Int = 0,
     var temperatures: RealmList<Float> = RealmList<Float>(),
     var cellVoltages: RealmList<Float> = RealmList<Float>(),
-    var temperature: Float = 0.0f
+
+    var cycles: Short = 0,
+    var capacity: Float = 0.0f,
+    var temperature: Float = 0.0f,
+    var dischargeCurrent: Float = 0.0f,
+    var packVoltage: Float = 0.0f,
+    var chargeCurrent: Float = 0.0f,
+    var maxChargeCurrent: Float = 0.0f
 ) : RealmObject() {
-    var vol: Float  = 0.0f;
-
-    val temp: Float
-        get() {
-            return temperature
-        }
-
     val voltage: Float
         get() {
-//            return cellVoltages.sum()
-            return vol
+            return cellVoltages.sum()
         }
 
     val avgTemperature: Float
@@ -59,4 +57,5 @@ open class BatteryData(
         get() {
             return current * voltage
         }
+
 }

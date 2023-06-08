@@ -307,7 +307,7 @@
             app:layout_flexBasisPercent="50%">
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardVoltage"
+                android:id="@+id/cardCapacity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@color/bgBase"
@@ -325,7 +325,7 @@
                     android:padding="0dp">
 
                     <TextView
-                        android:id="@+id/labelVoltage"
+                        android:id="@+id/labelPackCapacity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/aldrich"
@@ -333,10 +333,10 @@
                         android:textColor="@color/white"
                         android:textSize="32sp"
                         android:typeface="monospace"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageViewBattery"
+                        app:layout_constraintBottom_toBottomOf="@+id/labelPackCapacityTitle"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/imageViewBattery" />
+                        app:layout_constraintTop_toTopOf="@+id/labelPackCapacityTitle" />
 
                     <TextView
                         android:id="@+id/labelVoltageUnit"
@@ -349,18 +349,18 @@
                         android:textColor="@color/darkBorder"
                         android:textSize="24sp"
                         android:typeface="monospace"
-                        app:layout_constraintBottom_toBottomOf="@+id/labelVoltage"
-                        app:layout_constraintStart_toEndOf="@+id/labelVoltage" />
+                        app:layout_constraintBottom_toBottomOf="@+id/labelPackCapacity"
+                        app:layout_constraintStart_toEndOf="@+id/labelPackCapacity" />
 
                     <ImageView
-                        android:id="@+id/imageViewBattery"
+                        android:id="@+id/labelPackCapacityTitle"
                         android:layout_width="36dp"
                         android:layout_height="64dp"
                         android:layout_marginEnd="8dp"
                         android:contentDescription="@string/connectedToBms"
                         android:foregroundTint="@color/secondary"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/labelVoltage"
+                        app:layout_constraintEnd_toStartOf="@+id/labelPackCapacity"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_bolt" />
 
@@ -375,7 +375,7 @@
             app:layout_flexBasisPercent="50%">
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardEnergy"
+                android:id="@+id/cardCycle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@color/bgBase"
@@ -393,7 +393,7 @@
                     android:padding="0dp">
 
                     <TextView
-                        android:id="@+id/labelCurrent"
+                        android:id="@+id/labelCycle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/aldrich"
@@ -401,10 +401,10 @@
                         android:textColor="@color/white"
                         android:textSize="32sp"
                         android:typeface="monospace"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageViewCapacityPercent"
+                        app:layout_constraintBottom_toBottomOf="@+id/labelCycleTitle"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/imageViewCapacityPercent" />
+                        app:layout_constraintTop_toTopOf="@+id/labelCycleTitle" />
 
                     <TextView
                         android:id="@+id/labelEnergyUnit"
@@ -417,18 +417,18 @@
                         android:textColor="@color/darkBorder"
                         android:textSize="24sp"
                         android:typeface="monospace"
-                        app:layout_constraintBottom_toBottomOf="@+id/labelCurrent"
-                        app:layout_constraintStart_toEndOf="@+id/labelCurrent" />
+                        app:layout_constraintBottom_toBottomOf="@+id/labelCycle"
+                        app:layout_constraintStart_toEndOf="@+id/labelCycle" />
 
                     <ImageView
-                        android:id="@+id/imageViewCapacityPercent"
+                        android:id="@+id/labelCycleTitle"
                         android:layout_width="36dp"
                         android:layout_height="64dp"
                         android:layout_marginEnd="8dp"
                         android:contentDescription="@string/connectedToBms"
                         android:foregroundTint="@color/secondary"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/labelCurrent"
+                        app:layout_constraintEnd_toStartOf="@+id/labelCycle"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_bolt" />
 

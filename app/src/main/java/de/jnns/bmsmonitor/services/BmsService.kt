@@ -97,12 +97,18 @@ class BmsService : Service() {
     }
 
     private fun onGeneralInfoAvailable(generalInfo: BmsGeneralInfoResponse) {
-        batteryData.current = generalInfo.totalCurrent
-        batteryData.currentCapacity = generalInfo.residualCapacity
-        batteryData.totalCapacity = generalInfo.nominalCapacity
-        batteryData.temperatureCount = generalInfo.temperatureProbeCount
-        batteryData.temperatures = generalInfo.temperatureProbeValues
-        batteryData.vol = generalInfo.totalVoltage
+//        batteryData.current = generalInfo.totalCurrent
+//        batteryData.currentCapacity = generalInfo.residualCapacity
+//        batteryData.totalCapacity = generalInfo.nominalCapacity
+//        batteryData.temperatureCount = generalInfo.temperatureProbeCount
+//        batteryData.temperatures = generalInfo.temperatureProbeValues
+//        batteryData.vol = generalInfo.totalVoltage
+        batteryData.packVoltage = generalInfo.packVoltage
+        batteryData.dischargeCurrent = generalInfo.dischargeCurrent
+        batteryData.capacity = generalInfo.capacity
+        batteryData.cycles = generalInfo.cycles
+        batteryData.chargeCurrent = generalInfo.chargeCurrent
+        batteryData.maxChargeCurrent = generalInfo.maxChargeCurrent
         batteryData.temperature = generalInfo.temperature
 
         generalInfoReceived = true
