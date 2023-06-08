@@ -30,7 +30,7 @@ class BmsGattClientCallback(
     private val rxUuid = UUID.fromString("0000C305-0000-1000-8000-00805f9b34fb")
     private val txUuid = UUID.fromString("0000C302-0000-1000-8000-00805f9b34fb")
 
-    private val bufferSize: Int = 256
+    private val bufferSize: Int = 128
     private var uartBuffer = ByteArray(bufferSize)
     private var uartBufferPos: Int = 0
     private var uartBytesLeft: Int = 0
@@ -136,7 +136,7 @@ class BmsGattClientCallback(
 
         val frameBytes = uartBuffer.slice(IntRange(0, size)).toByteArray()
 
-         Log.d("BMS", "FrameData (" + frameBytes.size + "): " + frameBytes.toHexString())
+//         Log.d("BMS", "FrameData (" + frameBytes.size + "): " + frameBytes.toHexString())
 
 //        if (frameBytes[1] == 0x3.toByte()) {
 //            val generalInfo = BmsGeneralInfoResponse(frameBytes)

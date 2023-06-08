@@ -23,7 +23,7 @@ import io.realm.Realm
 class BmsService : Service() {
     // BMS commands, they won't change
 //    private val cmdGeneralInfo: ByteArray = ubyteArrayOf(0xDDU, 0xA5U, 0x03U, 0x00U, 0xFFU, 0xFDU, 0x77U).toByteArray()
-    private val cmdGeneralInfo: ByteArray = ubyteArrayOf(0x10U, 0x00U, 0x00U, 0x64U).toByteArray()
+    private val cmdGeneralInfo: ByteArray = ubyteArrayOf(0x10U, 0x00U, 0x00U, 0x40U).toByteArray()
     private val cmdCellInfo: ByteArray = ubyteArrayOf(0xDDU, 0xA5U, 0x04U, 0x00U, 0xFFU, 0xFCU, 0x77U).toByteArray()
     private val cmdBmsVersion: ByteArray = ubyteArrayOf(0xDDU, 0xA5U, 0x05U, 0x00U, 0xFFU, 0xFBU, 0x77U).toByteArray()
 
@@ -124,7 +124,8 @@ class BmsService : Service() {
     }
 
     private fun sendData() {
-        if (cellInfoReceived && generalInfoReceived) {
+//        if (cellInfoReceived && generalInfoReceived) {
+        if (generalInfoReceived) {
             cellInfoReceived = false
             generalInfoReceived = false
 
