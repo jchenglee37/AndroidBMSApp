@@ -138,6 +138,7 @@ class BmsGattClientCallback(
                 onFrameComplete(uartBufferPos)
                 uartBufferPos = 0
                 isInTrans = false
+                Log.d("BMS", "Transaction Done.")
                 break
             }
         }
