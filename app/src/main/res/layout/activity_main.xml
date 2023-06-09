@@ -65,13 +65,15 @@
         android:id="@+id/bottomNavigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/bgBase9"
+        android:background="@color/bgBase"
         android:hapticFeedbackEnabled="true"
         app:elevation="0dp"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:itemIconTint="@drawable/selector_bottom_nav_item"
+        app:itemTextColor="@drawable/selector_bottom_nav_item"
         app:menu="@menu/main_navigation_menu" />
 
     <androidx.fragment.app.FragmentContainerView

@@ -7,14 +7,16 @@
         android:title="@string/navBattery"/>
     <item
         android:id="@+id/page_bike"
-        android:enabled="true"
+        android:enabled="false"
         android:icon="@drawable/ic_bike"
-        android:title="@string/navBike"/>
+        android:title="@string/navBike"
+        android:visible="false" />
     <item
         android:id="@+id/page_stats"
-        android:enabled="true"
+        android:enabled="false"
         android:icon="@drawable/ic_stats"
-        android:title="@string/navStats"/>
+        android:title="@string/navStats"
+        android:visible="false" />
     <item
         android:id="@+id/page_settings"
         android:enabled="true"
