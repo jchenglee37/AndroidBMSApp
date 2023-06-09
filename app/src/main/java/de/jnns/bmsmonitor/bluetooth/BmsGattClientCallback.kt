@@ -30,6 +30,8 @@ class BmsGattClientCallback(
     private val rxUuid = UUID.fromString("0000C305-0000-1000-8000-00805f9b34fb")
     private val txUuid = UUID.fromString("0000C302-0000-1000-8000-00805f9b34fb")
 
+    private var isInTrans: Boolean = false
+    private var receLen: Int = 0
     private val bufferSize: Int = 128
     private var uartBuffer = ByteArray(bufferSize)
     private var uartBufferPos: Int = 0
@@ -86,6 +88,16 @@ class BmsGattClientCallback(
         }
     }
 
+    fun setReceivingLen(receiveLen: Int) {
+        receLen = receiveLen
+        isInTrans = true
+        uartBufferPos = 0
+    }
+
+    fun isInTransaction(): Boolean {
+        return isInTrans
+    }
+
     override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
         super.onCharacteristicChanged(gatt, characteristic)
 
@@ -122,11 +134,13 @@ class BmsGattClientCallback(
 //            }
             uartBuffer[uartBufferPos] = byte
             uartBufferPos++
-            if (uartBufferPos >= bufferSize) {
+            if (uartBufferPos >= bufferSize || uartBufferPos >= receLen) {
+                isInTrans = false
+                uartBufferPos = 0
+                onFrameComplete(uartBufferPos)
                 break
             }
         }
-        onFrameComplete(uartBufferPos)
     }
 
     private fun onFrameComplete(size: Int) {

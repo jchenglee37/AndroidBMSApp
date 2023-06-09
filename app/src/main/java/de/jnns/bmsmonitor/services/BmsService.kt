@@ -176,7 +176,9 @@ class BmsService : Service() {
 //
 //                        dataModeSwitch = !dataModeSwitch
                         Log.d("BMS", "writeBytes():" + cmdGeneralInfo.toHexString())
-                        writeBytes(cmdGeneralInfo)
+                        if (gattClientCallback.isInTransaction() == false) {
+                            writeBytes(cmdGeneralInfo)
+                        }
 
                         dataHandler.postDelayed(this, dataPollDelay)
                     }
@@ -224,6 +226,7 @@ class BmsService : Service() {
     }
 
     private fun writeBytes(bytes: ByteArray) {
+        gattClientCallback.setReceivingLen(128);
         gattClientCallback.writeCharacteristic.value = bytes
         bluetoothGatt.writeCharacteristic(gattClientCallback.writeCharacteristic)
     }
