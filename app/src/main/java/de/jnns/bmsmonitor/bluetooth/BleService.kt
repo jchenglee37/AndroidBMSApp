@@ -49,7 +49,9 @@ class BleService : Service() {
             super.onScanResult(callbackType, result)
 
             if (result.device != null) {
-                BleManager.i.addDevice(result.device)
+                if(result.device.name.startsWith("BMS")) {
+                    BleManager.i.addDevice(result.device)
+                }
             }
         }
     }
