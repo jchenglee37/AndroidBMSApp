@@ -135,9 +135,9 @@ class BmsGattClientCallback(
             uartBuffer[uartBufferPos] = byte
             uartBufferPos++
             if (uartBufferPos >= bufferSize || uartBufferPos >= receLen) {
-                isInTrans = false
-                uartBufferPos = 0
                 onFrameComplete(uartBufferPos)
+                uartBufferPos = 0
+                isInTrans = false
                 break
             }
         }
