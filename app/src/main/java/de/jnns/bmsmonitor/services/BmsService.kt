@@ -96,6 +96,10 @@ class BmsService : Service() {
         return null
     }
 
+    override fun onDestroy() {
+        disconnectFromDevice()
+    }
+
     private fun onGeneralInfoAvailable(generalInfo: BmsGeneralInfoResponse) {
 //        batteryData.current = generalInfo.totalCurrent
 //        batteryData.currentCapacity = generalInfo.residualCapacity
@@ -175,8 +179,8 @@ class BmsService : Service() {
 //                        }
 //
 //                        dataModeSwitch = !dataModeSwitch
-                        Log.d("BMS", "writeBytes():" + cmdGeneralInfo.toHexString())
                         if (gattClientCallback.isInTransaction() == false) {
+                            Log.d("BMS", "writeBytes():" + cmdGeneralInfo.toHexString())
                             writeBytes(cmdGeneralInfo)
                         }
 

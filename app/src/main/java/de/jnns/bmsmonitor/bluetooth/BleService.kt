@@ -19,7 +19,8 @@ class BleService : Service() {
         super.onCreate()
 
         bluetoothLeScanner = BluetoothAdapter.getDefaultAdapter().bluetoothLeScanner
-
+//        BluetoothAdapter.getDefaultAdapter().bondedDevices()
+//        BluetoothAdapter.getDefaultAdapter().getRemoteDevice()
         startBleScanning()
     }
 
@@ -49,7 +50,10 @@ class BleService : Service() {
             super.onScanResult(callbackType, result)
 
             if (result.device != null) {
-                if(result.device.name.startsWith("BMS")) {
+                if(
+                    result.device.name != null &&
+                    result.device.name.startsWith("UOOK-BMS") == true
+                ) {
                     BleManager.i.addDevice(result.device)
                 }
             }

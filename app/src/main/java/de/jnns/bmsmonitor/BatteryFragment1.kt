@@ -55,9 +55,6 @@ class BatteryFragment1 : Fragment() {
             try {
                 val msg: String = intent.getStringExtra("batteryData")!!
 
-                // David Lee
-//                binding.labelStatus.text = String.format(resources.getString(R.string.connectedToBms), intent.getStringExtra("deviceName"))
-
                 if (msg.isNotEmpty()) {
                     updateUi(Gson().fromJson(msg, BatteryData::class.java))
                 }

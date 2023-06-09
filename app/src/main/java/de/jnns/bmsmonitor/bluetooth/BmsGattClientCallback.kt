@@ -32,7 +32,7 @@ class BmsGattClientCallback(
 
     private var isInTrans: Boolean = false
     private var receLen: Int = 0
-    private val bufferSize: Int = 128
+    private val bufferSize: Int = 256
     private var uartBuffer = ByteArray(bufferSize)
     private var uartBufferPos: Int = 0
     private var uartBytesLeft: Int = 0
@@ -68,7 +68,7 @@ class BmsGattClientCallback(
 
         for(serv in gatt.services) {
             i++
-            Log.d("BMS", "Services" + i.toString() + ":" + serv.uuid.toString())
+//            Log.d("BMS", "Services" + i.toString() + ":" + serv.uuid.toString())
         }
 
         val uartService = gatt.getService(uartUuid)
@@ -77,8 +77,8 @@ class BmsGattClientCallback(
         if (uartService != null) {
             readCharacteristic = uartService.getCharacteristic(rxUuid)
             writeCharacteristic = uartService.getCharacteristic(txUuid)
-            Log.d("BMS", "Got readCharacteristic:" + readCharacteristic.uuid.toString())
-            Log.d("BMS", "Got writeCharacteristic:" + writeCharacteristic.uuid.toString())
+//            Log.d("BMS", "Got readCharacteristic:" + readCharacteristic.uuid.toString())
+//            Log.d("BMS", "Got writeCharacteristic:" + writeCharacteristic.uuid.toString())
 
             gatt.setCharacteristicNotification(writeCharacteristic, true)
             gatt.setCharacteristicNotification(readCharacteristic, true)
@@ -101,44 +101,16 @@ class BmsGattClientCallback(
     override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
         super.onCharacteristicChanged(gatt, characteristic)
 
-        // Log.d("BluetoothGatt", "BLE Data (" + characteristic.value.size + "): " + characteristic.value.toHexString())
         Log.d("BMS", "BLE Data (" + characteristic.value.size + "): " + characteristic.value.toHexString())
 
         for (byte: Byte in characteristic.value) {
-//            if (uartBufferPos >= bufferSize) {
-//                isInFrame = false
-//                uartBufferPos = 0
-//                uartBytesLeft = 0
-//            }
-//
-//            uartBuffer[uartBufferPos] = byte
-//
-//            if (isInFrame) {
-//                if (uartBufferPos == 3) {
-//                    uartBytesLeft = byte.toInt()
-//                }
-//
-//                if (byte.toUByte() == 0x77.toUByte() && uartBytesLeft < 1) {
-//                    isInFrame = false
-//                    onFrameComplete(uartBufferPos)
-//                    uartBufferPos = 0
-//                    uartBytesLeft = 0
-//                } else {
-//
-//                    uartBufferPos++
-//                    uartBytesLeft--
-//                }
-//            } else if (byte.toUByte() == 0xDD.toUByte()) {
-//                isInFrame = true
-//                uartBufferPos++
-//            }
             uartBuffer[uartBufferPos] = byte
             uartBufferPos++
             if (uartBufferPos >= bufferSize || uartBufferPos >= receLen) {
                 onFrameComplete(uartBufferPos)
-                uartBufferPos = 0
-                isInTrans = false
                 Log.d("BMS", "Transaction Done.")
+                isInTrans = false
+                uartBufferPos = 0
                 break
             }
         }
@@ -149,18 +121,7 @@ class BmsGattClientCallback(
             return
         }
 
-        val frameBytes = uartBuffer.slice(IntRange(0, size)).toByteArray()
-
-//         Log.d("BMS", "FrameData (" + frameBytes.size + "): " + frameBytes.toHexString())
-
-//        if (frameBytes[1] == 0x3.toByte()) {
-//            val generalInfo = BmsGeneralInfoResponse(frameBytes)
-//            onGeneralInfoCallback(generalInfo)
-//        } else if (frameBytes[1] == 0x4.toByte()) {
-//            val cellInfo = BmsCellInfoResponse(frameBytes)
-//            onCellInfoCallback(cellInfo)
-//        }
-//
+        val frameBytes = uartBuffer.slice(IntRange(0, size - 1)).toByteArray()
         val generalInfo = BmsGeneralInfoResponse(frameBytes)
         onGeneralInfoCallback(generalInfo)
     }
