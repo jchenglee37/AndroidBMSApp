@@ -97,6 +97,59 @@ class BmsGattClientCallback(
     fun isInTransaction(): Boolean {
         return isInTrans
     }
+//    override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
+//        super.onCharacteristicChanged(gatt, characteristic)
+//
+//        // Log.d("BluetoothGatt", "BLE Data (" + characteristic.value.size + "): " + characteristic.value.toHexString())
+//
+//        for (byte: Byte in characteristic.value) {
+//            if (uartBufferPos >= bufferSize) {
+//                isInFrame = false
+//                uartBufferPos = 0
+//                uartBytesLeft = 0
+//            }
+//
+//            uartBuffer[uartBufferPos] = byte
+//
+//            if (isInFrame) {
+//                if (uartBufferPos == 3) {
+//                    uartBytesLeft = byte.toInt()
+//                }
+//
+//                if (byte.toUByte() == 0x77.toUByte() && uartBytesLeft < 1) {
+//                    isInFrame = false
+//                    onFrameComplete(uartBufferPos)
+//                    uartBufferPos = 0
+//                    uartBytesLeft = 0
+//                } else {
+//
+//                    uartBufferPos++
+//                    uartBytesLeft--
+//                }
+//            } else if (byte.toUByte() == 0xDD.toUByte()) {
+//                isInFrame = true
+//                uartBufferPos++
+//            }
+//        }
+//    }
+//
+//    private fun onFrameComplete(size: Int) {
+//        if (size <= 0) {
+//            return
+//        }
+//
+//        val frameBytes = uartBuffer.slice(IntRange(0, size)).toByteArray()
+//
+//        // Log.d("BluetoothGatt", "FrameData (" + frameBytes.size + "): " + frameBytes.toHexString())
+//
+//        if (frameBytes[1] == 0x3.toByte()) {
+//            val generalInfo = BmsGeneralInfoResponse(frameBytes)
+//            onGeneralInfoCallback(generalInfo)
+//        } else if (frameBytes[1] == 0x4.toByte()) {
+//            val cellInfo = BmsCellInfoResponse(frameBytes)
+//            onCellInfoCallback(cellInfo)
+//        }
+//    }
 
     override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
         super.onCharacteristicChanged(gatt, characteristic)

@@ -6,7 +6,7 @@
     <string name="appNameStats">BMS Monitor - Stats</string>
 
     <string name="waitForBms">Waiting for BMS…</string>
-    <string name="connectedToBms">BMS: %1$s</string>
+    <string name="connectedToBms">BMS: %1$s/%2$s</string>
     <string name="connectedToBike">Bike: %1$s</string>
 
     <string name="power">Power</string>
@@ -26,7 +26,7 @@
 
     <string name="zeroZero">0</string>
     <string name="zeroDotZero">0.0</string>
-    <string name="zeroClock">00:00</string>
+    <string name="zeroClock">Cycle:</string>
 
     <string name="unitDisplayWatt">W</string>
     <string name="unitDisplayVolt">V</string>

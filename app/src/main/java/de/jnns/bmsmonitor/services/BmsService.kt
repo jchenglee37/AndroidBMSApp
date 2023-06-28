@@ -107,13 +107,42 @@ class BmsService : Service() {
 //        batteryData.temperatureCount = generalInfo.temperatureProbeCount
 //        batteryData.temperatures = generalInfo.temperatureProbeValues
 //        batteryData.vol = generalInfo.totalVoltage
-        batteryData.packVoltage = generalInfo.packVoltage
-        batteryData.dischargeCurrent = generalInfo.dischargeCurrent
+
         batteryData.capacity = generalInfo.capacity
-        batteryData.cycles = generalInfo.cycles
-        batteryData.chargeCurrent = generalInfo.chargeCurrent
+        batteryData.sysTemperature = generalInfo.sysTemperature
+        batteryData.packCurrent = generalInfo.packCurrent
+        batteryData.packVoltage = generalInfo.packVoltage
+        batteryData.maxDischargeCurrent = generalInfo.maxDischargeCurrent
         batteryData.maxChargeCurrent = generalInfo.maxChargeCurrent
-        batteryData.temperature = generalInfo.temperature
+        batteryData.bpVersion = generalInfo.bpVersion
+        batteryData.bpNumber = generalInfo.bpNumber
+        batteryData.packRSOC = generalInfo.packRSOC
+        batteryData.packDischargCycle = generalInfo.packDischargCycle
+        batteryData.heatsinkTemperature = generalInfo.heatsinkTemperature
+        batteryData.cellVoltage1 = generalInfo.cellVoltage1
+        batteryData.cellVoltage2 = generalInfo.cellVoltage2
+        batteryData.cellVoltage3 = generalInfo.cellVoltage3
+        batteryData.cellVoltage4 = generalInfo.cellVoltage4
+        batteryData.cellVoltage5 = generalInfo.cellVoltage5
+        batteryData.cellVoltage6 = generalInfo.cellVoltage6
+        batteryData.cellVoltage7 = generalInfo.cellVoltage7
+        batteryData.cellVoltage8 = generalInfo.cellVoltage8
+        batteryData.cellVoltage9 = generalInfo.cellVoltage9
+        batteryData.cellVoltage10 = generalInfo.cellVoltage10
+        batteryData.cellVoltage11 = generalInfo.cellVoltage11
+        batteryData.cellVoltage12 = generalInfo.cellVoltage12
+        batteryData.cellVoltage13 = generalInfo.cellVoltage13
+        batteryData.cellVoltage14 = generalInfo.cellVoltage14
+        batteryData.cellVoltage15 = generalInfo.cellVoltage15
+        batteryData.cellVoltage16 = generalInfo.cellVoltage16
+
+//        batteryData.packVoltage = generalInfo.packVoltage
+//        batteryData.dischargeCurrent = generalInfo.dischargeCurrent
+//        batteryData.capacity = generalInfo.capacity
+//        batteryData.cycles = generalInfo.cycles
+//        batteryData.chargeCurrent = generalInfo.chargeCurrent
+//        batteryData.maxChargeCurrent = generalInfo.maxChargeCurrent
+//        batteryData.temperature = generalInfo.temperature
 
         generalInfoReceived = true
         sendData()

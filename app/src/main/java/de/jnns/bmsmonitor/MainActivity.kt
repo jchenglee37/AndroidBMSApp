@@ -12,7 +12,8 @@ import androidx.navigation.findNavController
 import androidx.preference.PreferenceManager
 import de.jnns.bmsmonitor.bluetooth.BleService
 import de.jnns.bmsmonitor.databinding.ActivityMainBinding
-import de.jnns.bmsmonitor.BatteryFragment1
+//import de.jnns.bmsmonitor.BatteryFragment1
+import de.jnns.bmsmonitor.BatteryFragment
 import de.jnns.bmsmonitor.services.BikeService
 import de.jnns.bmsmonitor.services.BmsService
 import io.realm.Realm
@@ -54,16 +55,16 @@ class MainActivity : AppCompatActivity() {
             Intent(this, BleService::class.java).also { intent -> startService(intent) }
         }
 
-//        val batteryFragment = BatteryFragment()
-        val batteryFragment1 = BatteryFragment1()
+        val batteryFragment = BatteryFragment()
+//        val batteryFragment1 = BatteryFragment1()
         val bikeFragment = BikeFragment()
         val statsFragment = StatsFragment()
         val settingsFragment = SettingsFragment()
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-//                R.id.page_battery -> supportFragmentManager.beginTransaction().apply { replace(R.id.nav_host_fragment, batteryFragment).commit() }
-                R.id.page_battery -> supportFragmentManager.beginTransaction().apply { replace(R.id.nav_host_fragment, batteryFragment1).commit() }
+                R.id.page_battery -> supportFragmentManager.beginTransaction().apply { replace(R.id.nav_host_fragment, batteryFragment).commit() }
+//                R.id.page_battery -> supportFragmentManager.beginTransaction().apply { replace(R.id.nav_host_fragment, batteryFragment1).commit() }
                 R.id.page_bike -> supportFragmentManager.beginTransaction().apply { replace(R.id.nav_host_fragment, bikeFragment).commit() }
                 R.id.page_stats -> supportFragmentManager.beginTransaction().apply { replace(R.id.nav_host_fragment, statsFragment).commit() }
                 R.id.page_settings -> supportFragmentManager.beginTransaction().apply { replace(R.id.nav_host_fragment, settingsFragment).commit() }

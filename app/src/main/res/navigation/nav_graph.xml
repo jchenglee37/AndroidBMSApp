@@ -12,9 +12,9 @@
 <!--        tools:layout="@layout/fragment_battery" />-->
     <fragment
         android:id="@+id/navigation_bms"
-        android:name="de.jnns.bmsmonitor.BatteryFragment1"
+        android:name="de.jnns.bmsmonitor.BatteryFragment"
         android:label="fragment_bms"
-        tools:layout="@layout/fragment_bms" />
+        tools:layout="@layout/fragment_battery" />
 
     <fragment
         android:id="@+id/navigation_settings"

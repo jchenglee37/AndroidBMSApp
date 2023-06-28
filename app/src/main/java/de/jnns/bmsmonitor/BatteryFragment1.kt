@@ -158,12 +158,12 @@ class BatteryFragment1 : Fragment() {
 //            var chargeCurrent: Float = 0.0f
 //            var maxChargeCurrent: Float = 0.0f
 
-            binding.labelCycle.text = batteryData.cycles.toString()
-            binding.labelPackCapacity.text = roundTo(batteryData.capacity, 1).toString()
-            binding.labelDischargeCurrent.text = roundTo(batteryData.dischargeCurrent, 1).toString()
-            binding.labelPackVoltage.text = roundTo(batteryData.packVoltage, 1).toString()
-            binding.labelChargeCurrent.text = roundTo(batteryData.chargeCurrent, 1).toString()
-            binding.labelMaxCC.text = roundTo(batteryData.maxChargeCurrent, 1).toString()
+//            binding.labelCycle.text = batteryData.cycles.toString()
+//            binding.labelPackCapacity.text = roundTo(batteryData.capacity, 1).toString()
+//            binding.labelDischargeCurrent.text = roundTo(batteryData.dischargeCurrent, 1).toString()
+//            binding.labelPackVoltage.text = roundTo(batteryData.packVoltage, 1).toString()
+//            binding.labelChargeCurrent.text = roundTo(batteryData.chargeCurrent, 1).toString()
+//            binding.labelMaxCC.text = roundTo(batteryData.maxChargeCurrent, 1).toString()
 
 //            // Power Gauge
 //            val powerUsage = batteryData.power * -1.0f
