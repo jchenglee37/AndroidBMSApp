@@ -98,31 +98,58 @@ class BatteryFragment : Fragment() {
         minCellVoltage = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("minCellVoltage", "2500")!!.toInt()
         maxCellVoltage = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("maxCellVoltage", "4200")!!.toInt()
 
-        binding.barchartCells.setNoDataTextColor(requireActivity().getColor(R.color.white))
-        binding.barchartCells.setNoDataText("...")
+        binding.barchartCells1.setNoDataTextColor(requireActivity().getColor(R.color.white))
+        binding.barchartCells1.setNoDataText("...")
 
-        binding.barchartCells.setPinchZoom(false)
-        binding.barchartCells.setTouchEnabled(false)
-        binding.barchartCells.isClickable = false
-        binding.barchartCells.isDoubleTapToZoomEnabled = false
+        binding.barchartCells1.setPinchZoom(false)
+        binding.barchartCells1.setTouchEnabled(false)
+        binding.barchartCells1.isClickable = false
+        binding.barchartCells1.isDoubleTapToZoomEnabled = false
 
-        binding.barchartCells.setDrawBorders(false)
-        binding.barchartCells.setDrawValueAboveBar(true)
-        binding.barchartCells.setDrawBorders(false)
-        binding.barchartCells.setDrawGridBackground(false)
+        binding.barchartCells1.setDrawBorders(false)
+        binding.barchartCells1.setDrawValueAboveBar(true)
+        binding.barchartCells1.setDrawBorders(false)
+        binding.barchartCells1.setDrawGridBackground(false)
 
-        binding.barchartCells.description.isEnabled = false
-        binding.barchartCells.legend.isEnabled = false
+        binding.barchartCells1.description.isEnabled = false
+        binding.barchartCells1.legend.isEnabled = false
 
-        binding.barchartCells.axisLeft.setDrawGridLines(false)
-        binding.barchartCells.axisLeft.setDrawLabels(false)
-        binding.barchartCells.axisLeft.setDrawAxisLine(false)
+        binding.barchartCells1.axisLeft.setDrawGridLines(false)
+        binding.barchartCells1.axisLeft.setDrawLabels(false)
+        binding.barchartCells1.axisLeft.setDrawAxisLine(false)
 
-        binding.barchartCells.xAxis.setDrawGridLines(false)
-        binding.barchartCells.xAxis.setDrawLabels(false)
-        binding.barchartCells.xAxis.setDrawAxisLine(false)
+        binding.barchartCells1.xAxis.setDrawGridLines(false)
+        binding.barchartCells1.xAxis.setDrawLabels(false)
+        binding.barchartCells1.xAxis.setDrawAxisLine(false)
 
-        binding.barchartCells.axisRight.isEnabled = false
+        binding.barchartCells1.axisRight.isEnabled = false
+
+
+        binding.barchartCells2.setNoDataTextColor(requireActivity().getColor(R.color.white))
+        binding.barchartCells2.setNoDataText("...")
+
+        binding.barchartCells2.setPinchZoom(false)
+        binding.barchartCells2.setTouchEnabled(false)
+        binding.barchartCells2.isClickable = false
+        binding.barchartCells2.isDoubleTapToZoomEnabled = false
+
+        binding.barchartCells2.setDrawBorders(false)
+        binding.barchartCells2.setDrawValueAboveBar(true)
+        binding.barchartCells2.setDrawBorders(false)
+        binding.barchartCells2.setDrawGridBackground(false)
+
+        binding.barchartCells2.description.isEnabled = false
+        binding.barchartCells2.legend.isEnabled = false
+
+        binding.barchartCells2.axisLeft.setDrawGridLines(false)
+        binding.barchartCells2.axisLeft.setDrawLabels(false)
+        binding.barchartCells2.axisLeft.setDrawAxisLine(false)
+
+        binding.barchartCells2.xAxis.setDrawGridLines(false)
+        binding.barchartCells2.xAxis.setDrawLabels(false)
+        binding.barchartCells2.xAxis.setDrawAxisLine(false)
+
+        binding.barchartCells2.axisRight.isEnabled = false
     }
 
     override fun onResume() {
@@ -227,25 +254,38 @@ class BatteryFragment : Fragment() {
             cellBars.add(BarEntry(5.toFloat(), batteryData.cellVoltage6))
             cellBars.add(BarEntry(6.toFloat(), batteryData.cellVoltage7))
             cellBars.add(BarEntry(7.toFloat(), batteryData.cellVoltage8))
-            cellBars.add(BarEntry(8.toFloat(), batteryData.cellVoltage9))
-            cellBars.add(BarEntry(9.toFloat(), batteryData.cellVoltage10))
-            cellBars.add(BarEntry(10.toFloat(), batteryData.cellVoltage11))
-            cellBars.add(BarEntry(11.toFloat(), batteryData.cellVoltage12))
-            cellBars.add(BarEntry(12.toFloat(), batteryData.cellVoltage13))
-            cellBars.add(BarEntry(13.toFloat(), batteryData.cellVoltage14))
-            cellBars.add(BarEntry(14.toFloat(), batteryData.cellVoltage15))
-            cellBars.add(BarEntry(15.toFloat(), batteryData.cellVoltage16))
 
             val barDataSetVoltage = BarDataSet(cellBars, "Cell Voltages")
             barDataSetVoltage.valueTextColor = requireActivity().getColor(R.color.white)
             barDataSetVoltage.valueTextSize = 12.0f
-            barDataSetVoltage.valueFormatter = DefaultValueFormatter(2)
+            barDataSetVoltage.valueFormatter = DefaultValueFormatter(3)
             barDataSetVoltage.setColors(requireActivity().getColor(R.color.primary))
 
             val barData = BarData(barDataSetVoltage)
-            binding.barchartCells.data = barData
-            binding.barchartCells.invalidate()
+            binding.barchartCells1.data = barData
+            binding.barchartCells1.invalidate()
 
+
+            val cellBars1 = ArrayList<BarEntry>()
+
+            cellBars1.add(BarEntry(8.toFloat(), batteryData.cellVoltage9))
+            cellBars1.add(BarEntry(9.toFloat(), batteryData.cellVoltage10))
+            cellBars1.add(BarEntry(10.toFloat(), batteryData.cellVoltage11))
+            cellBars1.add(BarEntry(11.toFloat(), batteryData.cellVoltage12))
+            cellBars1.add(BarEntry(12.toFloat(), batteryData.cellVoltage13))
+            cellBars1.add(BarEntry(13.toFloat(), batteryData.cellVoltage14))
+            cellBars1.add(BarEntry(14.toFloat(), batteryData.cellVoltage15))
+            cellBars1.add(BarEntry(15.toFloat(), batteryData.cellVoltage16))
+
+            val barDataSetVoltage1 = BarDataSet(cellBars, "Cell Voltages")
+            barDataSetVoltage1.valueTextColor = requireActivity().getColor(R.color.white)
+            barDataSetVoltage1.valueTextSize = 12.0f
+            barDataSetVoltage1.valueFormatter = DefaultValueFormatter(3)
+            barDataSetVoltage1.setColors(requireActivity().getColor(R.color.primary))
+
+            val barData1 = BarData(barDataSetVoltage)
+            binding.barchartCells2.data = barData1
+            binding.barchartCells2.invalidate()
 
 
 //            val cellBars = ArrayList<BarEntry>()
@@ -278,9 +318,12 @@ class BatteryFragment : Fragment() {
 
             // Row 2
 //            binding.labelCurrent.text = String.format(Locale.US, "%.1f", roundTo(batteryData.current, 1))
-            binding.labelCurrent.text = String.format(Locale.US, "%.1f", roundTo(batteryData.packCurrent, 1))
+//            binding.labelCurrent.text = String.format(Locale.US, "%.1f", roundTo(batteryData.packCurrent, 1))
+//            batteryData.packCurrent = 3.14f
+            binding.labelCurrent.text = roundTo(batteryData.packCurrent, 1).toString()
 //            binding.labelCapacityWh.text = batteryData.watthours.roundToInt().toString()
-            binding.labelCapacityWh.text = batteryData.capacity.roundToInt().toString()
+//            binding.labelCapacityWh.text = batteryData.capacity.roundToInt().toString()
+            binding.labelCapacityWh.text = roundTo(batteryData.capacity, 1).toString()
 
             // Row 3
 //            binding.labelTemperature.text = roundTo(batteryData.avgTemperature, 1).toString()

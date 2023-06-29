@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">BMS Monitor</string>
-    <string name="app_name_big">BMS</string>
+    <string name="app_name_big">UOOK BMS</string>
     <string name="app_name_thin">Monitor</string>
     <string name="appNameSettings">BMS Monitor - Settings</string>
     <string name="appNameStats">BMS Monitor - Stats</string>
 
     <string name="waitForBms">Waiting for BMS…</string>
-    <string name="connectedToBms">BMS: %1$s/%2$s</string>
+    <string name="connectedToBms">BMS: %2$02x%1$02x</string>
     <string name="connectedToBike">Bike: %1$s</string>
 
     <string name="power">Power</string>

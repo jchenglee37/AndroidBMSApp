@@ -208,10 +208,11 @@ class BmsService : Service() {
 //                        }
 //
 //                        dataModeSwitch = !dataModeSwitch
-                        if (gattClientCallback.isInTransaction() == false) {
+
+//                        if (gattClientCallback.isInTransaction() == false) {
                             Log.d("BMS", "writeBytes():" + cmdGeneralInfo.toHexString())
                             writeBytes(cmdGeneralInfo)
-                        }
+//                        }
 
                         dataHandler.postDelayed(this, dataPollDelay)
                     }
