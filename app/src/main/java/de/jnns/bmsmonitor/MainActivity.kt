@@ -56,7 +56,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         val batteryFragment = BatteryFragment()
-//        val batteryFragment1 = BatteryFragment1()
         val bikeFragment = BikeFragment()
         val statsFragment = StatsFragment()
         val settingsFragment = SettingsFragment()
@@ -64,7 +63,6 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.page_battery -> supportFragmentManager.beginTransaction().apply { replace(R.id.nav_host_fragment, batteryFragment).commit() }
-//                R.id.page_battery -> supportFragmentManager.beginTransaction().apply { replace(R.id.nav_host_fragment, batteryFragment1).commit() }
                 R.id.page_bike -> supportFragmentManager.beginTransaction().apply { replace(R.id.nav_host_fragment, bikeFragment).commit() }
                 R.id.page_stats -> supportFragmentManager.beginTransaction().apply { replace(R.id.nav_host_fragment, statsFragment).commit() }
                 R.id.page_settings -> supportFragmentManager.beginTransaction().apply { replace(R.id.nav_host_fragment, settingsFragment).commit() }

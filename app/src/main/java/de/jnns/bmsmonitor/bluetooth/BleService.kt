@@ -19,8 +19,6 @@ class BleService : Service() {
         super.onCreate()
 
         bluetoothLeScanner = BluetoothAdapter.getDefaultAdapter().bluetoothLeScanner
-//        BluetoothAdapter.getDefaultAdapter().bondedDevices()
-//        BluetoothAdapter.getDefaultAdapter().getRemoteDevice()
         startBleScanning()
     }
 

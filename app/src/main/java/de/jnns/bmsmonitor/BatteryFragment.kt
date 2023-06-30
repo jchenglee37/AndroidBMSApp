@@ -50,9 +50,6 @@ class BatteryFragment : Fragment() {
         override fun onReceive(context: Context, intent: Intent) {
             try {
                 val msg: String = intent.getStringExtra("batteryData")!!
-
-//                binding.labelStatus.text = String.format(resources.getString(R.string.connectedToBms), intent.getStringExtra("deviceName"))
-
                 if (msg.isNotEmpty()) {
                     updateUi(Gson().fromJson(msg, BatteryData::class.java))
                 }
@@ -175,7 +172,6 @@ class BatteryFragment : Fragment() {
             binding.labelStatus.text = String.format(resources.getString(R.string.connectedToBms), batteryData.bpVersion, batteryData.bpNumber)
 
             // Power Gauge
-//            val powerUsage = batteryData.power * -1.0f
             val powerUsage = batteryData.packCurrent * batteryData.packVoltage
 
             var chargePower:Float = 0.0f
@@ -183,22 +179,13 @@ class BatteryFragment : Fragment() {
             if(batteryData.packCurrent >= 0.0f)
             {
                 chargePower = batteryData.packCurrent / batteryData.maxChargeCurrent
-//                if(chargePower > 1.0f) {
-//                    chargePower = 1.0f * -500
-//                } else {
-                    chargePower = chargePower * -500
-//                }
+                chargePower = chargePower * -500
             } else {
                 chargePower = batteryData.packCurrent / batteryData.maxDischargeCurrent
-//                if(chargePower > 1.0f) {
-//                    chargePower = 1.0f * -1000
-//                } else {
-                    chargePower = chargePower * -1000
-//                }
+                chargePower = chargePower * -1000
             }
-//            chargePower = chargePower * -1
+
             binding.speedViewSpeed.speedTo(chargePower, 1000)
-//            binding.speedViewSpeed.speedTo(1000.0f, 1000)
 
             if (powerUsage < 0.0f) {
                 binding.labelPower.text = "+${powerUsage.roundToInt() * -1}"
@@ -206,44 +193,8 @@ class BatteryFragment : Fragment() {
                 binding.labelPower.text = powerUsage.roundToInt().toString()
             }
 
-            // TODO: David Review
-//            // Remaining Time
-//            wattValues[smoothIndex] = batteryData.power
-//            ++smoothIndex
-//
-//            if (smoothIndex == smoothCount) {
-//                smoothIndex = 0
-//            }
-//
-//            var averagePower = wattValues.filter { x -> x != 0.0f }.average().toFloat()
-//
-//            if (averagePower < 0.0f) {
-//                averagePower *= -1
-//            }
-//
-//            val wattSeconds: Float = when {
-//                batteryData.power < 0.0f -> {
-//                    (batteryData.watthours / averagePower) * 3600
-//                }
-//                batteryData.power > 0.0f -> {
-//                    ((batteryData.totalWatthours - batteryData.watthours) / averagePower) * 3600
-//                }
-//                else -> {
-//                    0.0f
-//                }
-//            }
-//
-//            if (batteryData.power == 0.0f) {
-//                wattValues.fill(0.0f)
-//            }
-//
-//            val remainingMinutes = (wattSeconds % 3600) / 60
-//            val remainingHours = (wattSeconds - remainingMinutes) / 3600
-
-//            binding.labelTime.text = String.format("%02d:%02d", remainingHours.roundToInt(), remainingMinutes.roundToInt())
             binding.labelCycle.text = String.format("Cycle:%s", batteryData.packDischargCycle.toString())
 
-            // TODO: David Modify
             // Cell Bar-Diagram
             val cellBars = ArrayList<BarEntry>()
             cellBars.add(BarEntry(0.toFloat(), batteryData.cellVoltage1))
@@ -264,7 +215,6 @@ class BatteryFragment : Fragment() {
             val barData = BarData(barDataSetVoltage)
             binding.barchartCells1.data = barData
             binding.barchartCells1.invalidate()
-
 
             val cellBars1 = ArrayList<BarEntry>()
 
@@ -287,25 +237,6 @@ class BatteryFragment : Fragment() {
             binding.barchartCells2.data = barData1
             binding.barchartCells2.invalidate()
 
-
-//            val cellBars = ArrayList<BarEntry>()
-//
-//            for ((i, cell) in batteryData.cellVoltages.withIndex()) {
-//                cellBars.add(BarEntry(i.toFloat(), cell))
-//            }
-//
-//            val barDataSetVoltage = BarDataSet(cellBars, "Cell Voltages")
-//            barDataSetVoltage.valueTextColor = requireActivity().getColor(R.color.white)
-//            barDataSetVoltage.valueTextSize = 12.0f
-//            barDataSetVoltage.valueFormatter = DefaultValueFormatter(2)
-//            barDataSetVoltage.setColors(requireActivity().getColor(R.color.primary))
-//
-//            val barData = BarData(barDataSetVoltage)
-//            binding.barchartCells.data = barData
-//            binding.barchartCells.invalidate()
-
-            // Row 1
-//            val totalPercentage = ((batteryData.percentage) * 1000.0f).roundToInt() / 10.0f
             var totalPercentage = batteryData.packRSOC.toUByte()
             if(totalPercentage > 100U) {
                 totalPercentage = 100U
@@ -316,20 +247,10 @@ class BatteryFragment : Fragment() {
 
             uiBatteryCapacityBar(totalPercentage.toFloat())
 
-            // Row 2
-//            binding.labelCurrent.text = String.format(Locale.US, "%.1f", roundTo(batteryData.current, 1))
-//            binding.labelCurrent.text = String.format(Locale.US, "%.1f", roundTo(batteryData.packCurrent, 1))
-//            batteryData.packCurrent = 3.14f
             binding.labelCurrent.text = roundTo(batteryData.packCurrent, 1).toString()
-//            binding.labelCapacityWh.text = batteryData.watthours.roundToInt().toString()
-//            binding.labelCapacityWh.text = batteryData.capacity.roundToInt().toString()
             binding.labelCapacityWh.text = roundTo(batteryData.capacity, 1).toString()
 
-            // Row 3
-//            binding.labelTemperature.text = roundTo(batteryData.avgTemperature, 1).toString()
-//            binding.labelTemperature.text = roundTo(batteryData.temperature, 1).toString()
             binding.labelTemperature.text = roundTo(batteryData.sysTemperature, 1).toString()
-//            binding.labelTemperatureMax.text = roundTo(batteryData.maxTemperature, 1).toString()
             binding.labelTemperatureMax.text = roundTo(batteryData.heatsinkTemperature, 1).toString()
         }
     }

@@ -10,8 +10,6 @@ class BleManager {
 
     fun addDevice(device: BluetoothDevice) {
         if (!bleDevices.contains(device)) {
-//            Log.d("BleManager", "Device Address:" + device.address)
-//            Log.d("BleManager", "Device Name:" + device.name)
             bleDevices.add(device)
 
             for (func in onUpdateFunctions)

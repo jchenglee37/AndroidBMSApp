@@ -22,7 +22,6 @@ import io.realm.Realm
 @ExperimentalUnsignedTypes
 class BmsService : Service() {
     // BMS commands, they won't change
-//    private val cmdGeneralInfo: ByteArray = ubyteArrayOf(0xDDU, 0xA5U, 0x03U, 0x00U, 0xFFU, 0xFDU, 0x77U).toByteArray()
     private val cmdGeneralInfo: ByteArray = ubyteArrayOf(0x10U, 0x00U, 0x00U, 0x40U).toByteArray()
     private val cmdCellInfo: ByteArray = ubyteArrayOf(0xDDU, 0xA5U, 0x04U, 0x00U, 0xFFU, 0xFCU, 0x77U).toByteArray()
     private val cmdBmsVersion: ByteArray = ubyteArrayOf(0xDDU, 0xA5U, 0x05U, 0x00U, 0xFFU, 0xFBU, 0x77U).toByteArray()
@@ -65,7 +64,6 @@ class BmsService : Service() {
 
         bleMac = PreferenceManager.getDefaultSharedPreferences(this).getString("macAddress", "")!!
         blePin = PreferenceManager.getDefaultSharedPreferences(this).getString("blePin", "")!!
-//        dataPollDelay = PreferenceManager.getDefaultSharedPreferences(this).getString("refreshInterval", "1000")!!.toLong() / 2
         dataPollDelay = PreferenceManager.getDefaultSharedPreferences(this).getString("refreshInterval", "1000")!!.toLong()
 
         BleManager.i.onUpdateFunctions.add {
@@ -101,13 +99,6 @@ class BmsService : Service() {
     }
 
     private fun onGeneralInfoAvailable(generalInfo: BmsGeneralInfoResponse) {
-//        batteryData.current = generalInfo.totalCurrent
-//        batteryData.currentCapacity = generalInfo.residualCapacity
-//        batteryData.totalCapacity = generalInfo.nominalCapacity
-//        batteryData.temperatureCount = generalInfo.temperatureProbeCount
-//        batteryData.temperatures = generalInfo.temperatureProbeValues
-//        batteryData.vol = generalInfo.totalVoltage
-
         batteryData.capacity = generalInfo.capacity
         batteryData.sysTemperature = generalInfo.sysTemperature
         batteryData.packCurrent = generalInfo.packCurrent
@@ -135,15 +126,6 @@ class BmsService : Service() {
         batteryData.cellVoltage14 = generalInfo.cellVoltage14
         batteryData.cellVoltage15 = generalInfo.cellVoltage15
         batteryData.cellVoltage16 = generalInfo.cellVoltage16
-
-//        batteryData.packVoltage = generalInfo.packVoltage
-//        batteryData.dischargeCurrent = generalInfo.dischargeCurrent
-//        batteryData.capacity = generalInfo.capacity
-//        batteryData.cycles = generalInfo.cycles
-//        batteryData.chargeCurrent = generalInfo.chargeCurrent
-//        batteryData.maxChargeCurrent = generalInfo.maxChargeCurrent
-//        batteryData.temperature = generalInfo.temperature
-
         generalInfoReceived = true
         sendData()
     }
@@ -157,7 +139,6 @@ class BmsService : Service() {
     }
 
     private fun sendData() {
-//        if (cellInfoReceived && generalInfoReceived) {
         if (generalInfoReceived) {
             cellInfoReceived = false
             generalInfoReceived = false
@@ -201,19 +182,8 @@ class BmsService : Service() {
             override fun run() {
                 if (gattClientCallback.isConnected) {
                     if (isInForeground) {
-//                        if (dataModeSwitch) {
-//                            writeBytes(cmdGeneralInfo)
-//                        } else {
-//                            writeBytes(cmdCellInfo)
-//                        }
-//
-//                        dataModeSwitch = !dataModeSwitch
-
-//                        if (gattClientCallback.isInTransaction() == false) {
-                            Log.d("BMS", "writeBytes():" + cmdGeneralInfo.toHexString())
-                            writeBytes(cmdGeneralInfo)
-//                        }
-
+                        Log.d("BMS", "writeBytes():" + cmdGeneralInfo.toHexString())
+                        writeBytes(cmdGeneralInfo)
                         dataHandler.postDelayed(this, dataPollDelay)
                     }
                 } else {

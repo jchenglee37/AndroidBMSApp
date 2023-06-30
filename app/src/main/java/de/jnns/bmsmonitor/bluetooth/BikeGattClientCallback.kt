@@ -69,13 +69,9 @@ class BikeGattClientCallback(
         super.onCharacteristicChanged(gatt, characteristic)
 
         if (characteristic.uuid == lcdToMcuUuid) {
-            // Log.d("BluetoothGatt", "FrameData (LCD): " + characteristic.value.toHexString())
-
             val data = LcdToMcuResponse(characteristic.value)
             onLcdToMcuDataAvailable(data)
         } else if (characteristic.uuid == mcuToLcdUuid) {
-            // Log.d("BluetoothGatt", "FrameData (MCU): " + characteristic.value.toHexString())
-
             val data = McuToLcdResponse(characteristic.value)
             onMcuToLcdDataAvailable(data)
         }
