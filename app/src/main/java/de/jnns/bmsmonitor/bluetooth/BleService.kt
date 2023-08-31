@@ -37,8 +37,7 @@ class BleService : Service() {
 
     val service = BluetoothGattService(UART_SERVICE, BluetoothGattService.SERVICE_TYPE_PRIMARY)
 
-    val currentTime = BluetoothGattCharacteristic(UART_CHAR,
-        //Read-only characteristic, supports notifications
+    val uartCharacteristic = BluetoothGattCharacteristic(UART_CHAR,
         BluetoothGattCharacteristic.PROPERTY_WRITE,
         BluetoothGattCharacteristic.PERMISSION_WRITE)
     override fun onCreate() {
@@ -53,6 +52,10 @@ class BleService : Service() {
         val bluetoothAdapter = mBluetoothManager.adapter
         // We can't continue without proper Bluetooth support
         checkBluetoothSupport(bluetoothAdapter)
+
+        service.addCharacteristic(uartCharacteristic)
+
+        mGattServer?.addService(service) ?: Log.w(TAG, "Unable to create GATT server")
 
         bluetoothLeScanner = BluetoothAdapter.getDefaultAdapter().bluetoothLeScanner
         startBleScanning()
