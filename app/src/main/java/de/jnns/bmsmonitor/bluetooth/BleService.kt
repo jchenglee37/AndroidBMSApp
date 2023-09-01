@@ -4,6 +4,7 @@ import android.app.Service
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGatt
+import android.bluetooth.BluetoothGatt.GATT_SUCCESS
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattDescriptor
 import android.bluetooth.BluetoothGattServer
@@ -32,8 +33,13 @@ class BleService : Service() {
     private lateinit var mBluetoothManager: BluetoothManager
     private lateinit var mGattServer: BluetoothGattServer
 
-    val UART_SERVICE: UUID = UUID.fromString("00001805-0000-1000-8000-00805f9b34fb")
-    val UART_CHAR: UUID = UUID.fromString("00002a2b-0000-1000-8000-00805f9b34fb")
+//    UUID128(uuid_service_wireless_uart, 0xE0, 0x1C, 0x4B, 0x5E, 0x1E, 0xEB, 0xA1, 0x5C, 0xEE, 0xF4, 0x5E, 0xBA, 0x00, 0x01, 0xFF, 0x01)
+//      "01FF0100-BA5E-F4EE-5CA1-EB1E5E4B1CE0"
+//    UUID128(uuid_uart_stream, 0xE0, 0x1C, 0x4B, 0x5E, 0x1E, 0xEB, 0xA1, 0x5C, 0xEE, 0xF4, 0x5E, 0xBA, 0x01, 0x01, 0xFF, 0x01)
+//      "01FF0101-BA5E-F4EE-5CA1-EB1E5E4B1CE0"
+
+    val UART_SERVICE: UUID = UUID.fromString("01FF0100-BA5E-F4EE-5CA1-EB1E5E4B1CE0")
+    val UART_CHAR: UUID = UUID.fromString("01FF0101-BA5E-F4EE-5CA1-EB1E5E4B1CE0")
 
     val service = BluetoothGattService(UART_SERVICE, BluetoothGattService.SERVICE_TYPE_PRIMARY)
 
@@ -107,12 +113,13 @@ class BleService : Service() {
             super.onScanResult(callbackType, result)
 
             if (result.device != null) {
-                if(
-                    result.device.name != null &&
-                    result.device.name.startsWith("UOOK-BMS") == true
-                ) {
-                    BleManager.i.addDevice(result.device)
-                }
+//                if(
+//                    result.device.name != null &&
+//                    result.device.name.startsWith("UOOK-BMS") == true
+//                ) {
+//                    BleManager.i.addDevice(result.device)
+//                }
+                BleManager.i.addDevice(result.device)
             }
         }
     }
@@ -132,6 +139,52 @@ class BleService : Service() {
 //                registeredDevices.remove(device)
 //            }
         }
+
+        override fun onCharacteristicWriteRequest(
+                                    device: BluetoothDevice?,
+                                    requestId: Int,
+                                    characteristic: BluetoothGattCharacteristic?,
+                                    preparedWrite: Boolean,
+                                    responseNeeded: Boolean,
+                                    offset: Int,
+                                    value: ByteArray?
+                                    )
+        {
+            super.onCharacteristicWriteRequest(device, requestId, characteristic, preparedWrite, responseNeeded, offset, value)
+
+            var str: String = ""
+
+            if (value != null) {
+                for(vl in value) {
+                    str = String.format("%02X", vl)
+                    Log.d("BMS", str)
+                }
+            }
+            mGattServer?.sendResponse(
+                device,
+                requestId,
+                GATT_SUCCESS,
+                0,
+                null
+            )
+        }
+//        public void onCharacteristicWriteRequest(BluetoothDevice device, int requestId, BluetoothGattCharacteristic characteristic, boolean preparedWrite, boolean responseNeeded, int offset, byte[] value) {
+//            throw new RuntimeException("Stub!");
+//        }
+//        public void onCharacteristicWriteRequest(BluetoothDevice device, int requestId, BluetoothGattCharacteristic characteristic, boolean preparedWrite, boolean responseNeeded, int offset, byte[] value) {
+//            super.onCharacteristicWriteRequest(device, requestId, characteristic, preparedWrite, responseNeeded, offset, value);
+//            String s = "";
+//            for (byte vl: value) {
+//                s = String.format("%02X ", vl);
+//            }
+//            Log.v(TAG, "Char: " + characteristic.getUuid().toString() + " offset " + offset + " Value " + s);
+//
+//            if(tmp == mCurrentServiceFragment.getCharacteristicUUID().get(1))
+//            {
+//
+//            }
+//            mGattServer.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS, 0, null);
+//        }
 
         override fun onCharacteristicReadRequest(device: BluetoothDevice, requestId: Int, offset: Int,
                                                  characteristic: BluetoothGattCharacteristic

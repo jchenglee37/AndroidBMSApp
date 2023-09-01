@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCallback
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothProfile
+import android.os.Build
 import android.util.Log
 import de.jnns.bmsmonitor.bms.BmsCellInfoResponse
 import de.jnns.bmsmonitor.bms.BmsGeneralInfoResponse
@@ -20,12 +21,14 @@ class BmsGattClientCallback(
 
     var isConnected = false
 
-    lateinit var readCharacteristic: BluetoothGattCharacteristic
+//    lateinit var readCharacteristic: BluetoothGattCharacteristic
     lateinit var writeCharacteristic: BluetoothGattCharacteristic
 
-    private val uartUuid = UUID.fromString("0000A002-0000-1000-8000-00805f9b34fb")
-    private val rxUuid = UUID.fromString("0000C305-0000-1000-8000-00805f9b34fb")
-    private val txUuid = UUID.fromString("0000C302-0000-1000-8000-00805f9b34fb")
+//    private val uartUuid = UUID.fromString("0000A002-0000-1000-8000-00805f9b34fb")
+//    private val rxUuid = UUID.fromString("0000C305-0000-1000-8000-00805f9b34fb")
+//    private val txUuid = UUID.fromString("0000C302-0000-1000-8000-00805f9b34fb")
+    private val uartUuid = UUID.fromString("01FF0100-BA5E-F4EE-5CA1-EB1E5E4B1CE0")
+    private val txUuid = UUID.fromString("01FF0101-BA5E-F4EE-5CA1-EB1E5E4B1CE0")
 
     private var isInTrans: Boolean = false
     private var receLen: Int = 0
@@ -47,7 +50,10 @@ class BmsGattClientCallback(
         }
 
         if (newState == BluetoothProfile.STATE_CONNECTED) {
-            gatt.discoverServices()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                gatt.requestMtu(247);
+            }
+//            gatt.discoverServices()
         } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
             isConnected = false
         }
@@ -64,10 +70,12 @@ class BmsGattClientCallback(
         val uartService = gatt.getService(uartUuid)
 
         if (uartService != null) {
-            readCharacteristic = uartService.getCharacteristic(rxUuid)
+            Log.d("BMS", "uartService:" + uartService)
+//            readCharacteristic = uartService.getCharacteristic(rxUuid)
             writeCharacteristic = uartService.getCharacteristic(txUuid)
+            Log.d("BMS", "writeCharacteristic:" + writeCharacteristic)
             gatt.setCharacteristicNotification(writeCharacteristic, true)
-            gatt.setCharacteristicNotification(readCharacteristic, true)
+//            gatt.setCharacteristicNotification(readCharacteristic, true)
 
             onConnectionSucceeded()
             isConnected = true
@@ -100,6 +108,18 @@ class BmsGattClientCallback(
                 break
             }
         }
+    }
+
+    override fun onMtuChanged(gatt: BluetoothGatt, mtu: Int, status: Int) {
+        var mtu_size: Int = mtu
+        // Handle MTU change request from the central device
+//        if (mtu_size > 247) {
+//            mtu_size = 247
+//        }
+//        // Respond to the MTU change request
+//        bluetoothGattServer.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS, 0, null);
+        Log.d("BMS", "Negotiated mtu_size=" + mtu_size)
+        gatt.discoverServices()
     }
 
     private fun onFrameComplete(size: Int) {

@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGatt
 import android.content.Intent
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.util.Log
@@ -22,7 +23,8 @@ import io.realm.Realm
 @ExperimentalUnsignedTypes
 class BmsService : Service() {
     // BMS commands, they won't change
-    private val cmdGeneralInfo: ByteArray = ubyteArrayOf(0x10U, 0x00U, 0x00U, 0x40U).toByteArray()
+//    private val cmdGeneralInfo: ByteArray = ubyteArrayOf(0x10U, 0x00U, 0x00U, 0x40U).toByteArray()
+    private val cmdGeneralInfo: ByteArray = ubyteArrayOf(0xA5U, 0x01U, 0x61U, 0x62U).toByteArray()
     private val cmdCellInfo: ByteArray = ubyteArrayOf(0xDDU, 0xA5U, 0x04U, 0x00U, 0xFFU, 0xFCU, 0x77U).toByteArray()
     private val cmdBmsVersion: ByteArray = ubyteArrayOf(0xDDU, 0xA5U, 0x05U, 0x00U, 0xFFU, 0xFBU, 0x77U).toByteArray()
 
@@ -64,7 +66,8 @@ class BmsService : Service() {
 
         bleMac = PreferenceManager.getDefaultSharedPreferences(this).getString("macAddress", "")!!
         blePin = PreferenceManager.getDefaultSharedPreferences(this).getString("blePin", "")!!
-        dataPollDelay = PreferenceManager.getDefaultSharedPreferences(this).getString("refreshInterval", "1000")!!.toLong()
+        dataPollDelay = PreferenceManager.getDefaultSharedPreferences(this).getString("refreshInterval", "5000")!!.toLong()
+        dataPollDelay = 5000
 
         BleManager.i.onUpdateFunctions.add {
             searchForDeviceAndConnect()
@@ -182,7 +185,7 @@ class BmsService : Service() {
             override fun run() {
                 if (gattClientCallback.isConnected) {
                     if (isInForeground) {
-                        Log.d("BMS", "writeBytes():" + cmdGeneralInfo.toHexString())
+                        Log.d("BMS", "writeBytes()1:" + cmdGeneralInfo.toHexString())
                         writeBytes(cmdGeneralInfo)
                         dataHandler.postDelayed(this, dataPollDelay)
                     }
@@ -214,8 +217,9 @@ class BmsService : Service() {
                 ::onConnectionFailed        // on connection fails
             )
 
-            currentBleDevice.setPin(blePin.toByteArray())
-            currentBleDevice.createBond()
+//            currentBleDevice.setPin(blePin.toByteArray())
+//            currentBleDevice.createBond()
+//            currentBleDevice.setPairingConfirmation(false);
 
             bluetoothGatt = currentBleDevice.connectGatt(this, false, gattClientCallback)
         }
